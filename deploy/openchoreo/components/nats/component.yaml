@@ -1,0 +1,15 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: Component
+metadata:
+  name: nats
+  namespace: default
+spec:
+  owner:
+    projectName: doclet
+
+  componentType: deployment/message-broker
+  autoDeploy: true
+
+  parameters:
+    replicas: 1
+    port: 4222

@@ -1,0 +1,20 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: Workload
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  owner:
+    componentName: frontend
+    projectName: doclet
+  containers:
+    main:
+      image: placeholder:latest
+      files:
+        - key: config.json
+          mountPath: /usr/share/nginx/html
+          value: |
+            {
+              "DOC_SERVICE_URL": "TODO_DOCUMENT_SVC_EXTERNAL_URL",
+              "COLLAB_WS_URL": "TODO_COLLAB_SVC_EXTERNAL_URL"
+            }

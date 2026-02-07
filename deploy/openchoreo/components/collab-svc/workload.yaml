@@ -1,0 +1,17 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: Workload
+metadata:
+  name: collab-svc
+  namespace: default
+spec:
+  owner:
+    componentName: collab-svc
+    projectName: doclet
+  containers:
+    main:
+      image: placeholder:latest
+      env:
+        - key: DOCLET_COLLAB_ADDR
+          value: ":8090"
+        - key: DOCLET_NATS_URL
+          value: "nats://nats:4222"

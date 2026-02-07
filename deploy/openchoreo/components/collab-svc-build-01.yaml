@@ -1,0 +1,23 @@
+apiVersion: openchoreo.dev/v1alpha1
+kind: ComponentWorkflowRun
+metadata:
+  name: collab-svc-build-01
+  namespace: default
+spec:
+  owner:
+    projectName: doclet
+    componentName: collab-svc
+
+  workflow:
+    name: docker
+    systemParameters:
+      repository:
+        url: "https://github.com/VajiraPrabuddhaka/doclet.git"
+        secretRef: "github-token"
+        revision:
+          branch: "main"
+        appPath: "/"
+    parameters:
+      docker:
+        context: "/"
+        filePath: "/services/collab/Dockerfile"

@@ -1,0 +1,12 @@
+root = "."
+tmp_dir = "tmp/air-document"
+
+[build]
+  cmd = "go build -o ./tmp/air-document/doclet-document ./cmd/document"
+  bin = "./tmp/air-document/doclet-document"
+  include_ext = ["go"]
+  exclude_dir = ["frontend", "services/document/migrations", "tmp", "vendor"]
+  exclude_regex = ["_test\\.go$"]
+
+[log]
+  time = true
