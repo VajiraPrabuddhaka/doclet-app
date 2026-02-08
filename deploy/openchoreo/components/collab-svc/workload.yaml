@@ -1,7 +1,7 @@
 apiVersion: openchoreo.dev/v1alpha1
 kind: Workload
 metadata:
-  name: collab-svc
+  name: collab-svc-workload
   namespace: default
 spec:
   owner:

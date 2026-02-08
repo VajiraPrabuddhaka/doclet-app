@@ -12,8 +12,7 @@ spec:
     name: docker
     systemParameters:
       repository:
-        url: "https://github.com/VajiraPrabuddhaka/doclet.git"
-        secretRef: "github-token"
+        url: "https://github.com/VajiraPrabuddhaka/doclet-app.git"
         revision:
           branch: "main"
         appPath: "/"
