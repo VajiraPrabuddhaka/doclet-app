@@ -9,7 +9,7 @@ spec:
     componentName: document-svc
 
   workflow:
-    name: docker
+    name: docker-gitops-release
     systemParameters:
       repository:
         url: "https://github.com/VajiraPrabuddhaka/doclet-app.git"
@@ -20,3 +20,9 @@ spec:
       docker:
         context: "/"
         filePath: "/services/document/Dockerfile"
+      gitops:
+        repositoryUrl: "https://github.com/VajiraPrabuddhaka/openchoreo-sample-gitops"
+        branch: "main"
+        targetEnvironment: "development"
+        deploymentPipeline: "standard"
+      workloadDescriptorPath: "workload.yaml"
