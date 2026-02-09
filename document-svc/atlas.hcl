@@ -1,5 +1,5 @@
 data "external_schema" "gorm" {
-  program = ["go", "run", "./services/document/cmd/atlas"]
+  program = ["go", "run", "./cmd/atlas"]
 }
 
 env "local" {
@@ -7,6 +7,6 @@ env "local" {
   dev = "postgres://doclet:doclet@localhost:5432/doclet_dev?sslmode=disable"
   url = "postgres://doclet:doclet@localhost:5432/doclet?sslmode=disable"
   migration {
-    dir = "file://services/document/migrations"
+    dir = "file://migrations"
   }
 }

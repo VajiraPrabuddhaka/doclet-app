@@ -8,7 +8,7 @@ import (
 	"syscall"
 	"time"
 
-	"doclet/services/collab"
+	collab "collab-svc/internal"
 )
 
 func main() {

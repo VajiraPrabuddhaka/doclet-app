@@ -14,6 +14,8 @@ Three services communicate through NATS message broker:
 - **Collaboration Service** (Go, port 8090) — Stateless WebSocket hub. Accepts connections at `/ws?document_id=X&client_id=Y`, broadcasts Yjs edits and presence updates to peers, and publishes/subscribes via NATS for cross-instance delivery.
 - **Frontend** (React + Vite, port 5173) — Two-page SPA (Home + Editor). Uses TipTap editor with Yjs CRDT for conflict-free editing and y-protocols/awareness for cursor presence. Custom `DocletProvider` manages the WebSocket-to-Yjs bridge.
 
+Each Go service is a self-contained module with its own `go.mod` under `document-svc/` and `collab-svc/`.
+
 **Data flow**: User edits → TipTap generates Yjs update → base64-encoded over WebSocket → Collab Service broadcasts to peers + publishes to NATS → debounced snapshots (~1.5s) published to NATS → Document Service persists snapshot to Postgres.
 
 **NATS subjects**: `doclet.documents.{docId}.updates`, `doclet.documents.{docId}.presence`, `doclet.documents.{docId}.snapshots`
@@ -40,8 +42,8 @@ make run-frontend          # cd frontend && npm install && npm run dev
 ```
 # Install: go install github.com/air-verse/air@latest
 export $(grep -v '^#' .env | xargs)
-air -c services/document/.air.toml   # document service
-air -c services/collab/.air.toml     # collab service
+cd document-svc && air     # document service
+cd collab-svc && air       # collab service
 ```
 
 ### Full-stack Docker
@@ -51,19 +53,20 @@ docker compose --profile app up -d   # all services + infra
 
 ### Build
 ```
-go build ./cmd/document
-go build ./cmd/collab
+cd document-svc && go build -o doclet-document ./cmd
+cd collab-svc && go build -o doclet-collab ./cmd
 cd frontend && npm run build         # outputs to frontend/dist/
 ```
 
 ### Test
 ```
-go test ./...                        # Go tests
+cd document-svc && go test ./...     # Document service tests
+cd collab-svc && go test ./...       # Collab service tests
 ```
 
 ### Generate database migration
 ```
-go run ./services/document/cmd/atlas > services/document/migrations/<timestamp>_<name>.sql
+cd document-svc && go run ./cmd/atlas > migrations/<timestamp>_<name>.sql
 ```
 
 ## Key Environment Variables
@@ -97,10 +100,21 @@ Frontend also supports runtime config via `/config.json` (see `frontend/config.e
 ## Code Layout
 
 ```
-cmd/document/main.go          # Document service entrypoint
-cmd/collab/main.go             # Collab service entrypoint
-services/document/             # Document service (server, store, models, nats, config, database, migrate)
-services/collab/               # Collab service (server, hub, nats, config)
+document-svc/                  # Document service (self-contained Go module)
+  go.mod                       # module document-svc
+  cmd/main.go                  # entrypoint
+  cmd/atlas/main.go            # migration generation
+  internal/                    # package document (server, store, models, nats, config, database, migrate)
+  migrations/                  # SQL migration files
+  atlas.hcl                    # Atlas configuration
+  Dockerfile
+  .air.toml
+collab-svc/                    # Collab service (self-contained Go module)
+  go.mod                       # module collab-svc
+  cmd/main.go                  # entrypoint
+  internal/                    # package collab (server, hub, nats, config)
+  Dockerfile
+  .air.toml
 frontend/src/pages/            # HomePage.tsx, EditorPage.tsx
 frontend/src/editor/           # DocletProvider.ts (WebSocket + Yjs provider)
 frontend/src/api.ts            # Document service API client

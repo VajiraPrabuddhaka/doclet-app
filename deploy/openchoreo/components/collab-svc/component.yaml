@@ -16,11 +16,11 @@ spec:
         url: "https://github.com/VajiraPrabuddhaka/doclet-app.git"
         revision:
           branch: "main"
-        appPath: "/"
+        appPath: "/collab-svc"
     parameters:
       docker:
-        context: "/"
-        filePath: "/services/collab/Dockerfile"
+        context: "/collab-svc"
+        filePath: "/collab-svc/Dockerfile"
       gitops:
         repositoryUrl: "https://github.com/VajiraPrabuddhaka/openchoreo-sample-gitops"
         branch: "main"
