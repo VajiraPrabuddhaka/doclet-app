@@ -42,6 +42,8 @@ func main() {
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 
+	log.Printf("starting document service...")
+
 	go func() {
 		log.Printf("document service listening on %s", cfg.HTTPAddr)
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
