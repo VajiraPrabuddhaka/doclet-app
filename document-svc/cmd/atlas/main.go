@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"ariga.io/atlas-provider-gorm/gormschema"
-	"doclet/services/document"
+	document "document-svc/internal"
 )
 
 func main() {

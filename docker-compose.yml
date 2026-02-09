@@ -18,8 +18,8 @@ services:
 
   document-svc:
     build:
-      context: .
-      dockerfile: services/document/Dockerfile
+      context: ./document-svc
+      dockerfile: Dockerfile
     environment:
       DOCLET_DOCUMENT_ADDR: ":8080"
       DOCLET_DATABASE_URL: "postgres://doclet:doclet@postgres:5432/doclet?sslmode=disable"
@@ -34,8 +34,8 @@ services:
 
   collab-svc:
     build:
-      context: .
-      dockerfile: services/collab/Dockerfile
+      context: ./collab-svc
+      dockerfile: Dockerfile
     environment:
       DOCLET_COLLAB_ADDR: ":8090"
       DOCLET_NATS_URL: "nats://nats:4222"

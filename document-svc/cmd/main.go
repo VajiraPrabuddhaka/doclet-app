@@ -8,7 +8,7 @@ import (
 	"syscall"
 	"time"
 
-	"doclet/services/document"
+	document "document-svc/internal"
 )
 
 func main() {
