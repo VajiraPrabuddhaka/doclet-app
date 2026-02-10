@@ -42,7 +42,7 @@ func main() {
 		ReadHeaderTimeout: 5 * time.Second,
 	}
 
-	log.Printf("starting document service...")
+	log.Printf("starting document service.....")
 
 	go func() {
 		log.Printf("document service listening on %s", cfg.HTTPAddr)
