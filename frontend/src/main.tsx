@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 import App from './App'
 import './index.css'
 
-console.log('Doclet app is starting......!')
+console.log('Doclet app is starting...')
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
